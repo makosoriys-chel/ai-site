@@ -13,7 +13,7 @@ export default async function handler(req, res) {
         "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`
       },
       body: JSON.stringify({
-        model: "mistralai/mistral-7b-instruct:free",
+        model: "google/gemma-2-9b-it:free",
         messages: [
           {
             role: "system",
@@ -28,6 +28,12 @@ export default async function handler(req, res) {
     });
 
     const data = await response.json();
+
+if (data.error) {
+  return res.status(200).json({
+    reply: data.error.message
+  });
+}
 
 return res.status(200).json({
   reply: data.choices[0].message.content
