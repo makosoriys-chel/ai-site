@@ -13,7 +13,7 @@ export default async function handler(req, res) {
         "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`
       },
       body: JSON.stringify({
-        model: "google/gemma-2-9b-it:free",
+        model: "openchat/openchat-7b:free",
         messages: [
           {
             role: "system",
