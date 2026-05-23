@@ -13,7 +13,7 @@ export default async function handler(req, res) {
         "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`
       },
       body: JSON.stringify({
-        model: "deepseek/deepseek-v4-flash:free",
+        model: "moonshotai/kimi-k2:free",
         messages: [
           {
             role: "system",
