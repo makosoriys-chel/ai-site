@@ -1,164 +1,561 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Переводчик</title>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Жаргонизмы в культуре и сленге России</title>
   <style>
-
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      background: #0f172a;
-      color: white;
-      font-family: Arial, sans-serif;
+    }
 
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    html {
+      scroll-behavior: smooth;
+    }
 
-      height: 100vh;
+    body {
+      font-family: Inter, Arial, sans-serif;
+      background: #020617;
+      color: #ffffff;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 80px 24px;
+      background:
+        radial-gradient(circle at top left, rgba(59, 130, 246, 0.35), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(168, 85, 247, 0.25), transparent 35%),
+        #020617;
     }
 
     .container {
-      width: 90%;
-      max-width: 700px;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      padding: 10px 16px;
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      border-radius: 999px;
+      background: rgba(96, 165, 250, 0.1);
+      color: #dbeafe;
+      font-size: 14px;
     }
 
     h1 {
-      text-align: center;
-      margin-bottom: 10px;
+      max-width: 760px;
+      font-size: clamp(40px, 6vw, 64px);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
     }
 
-    p {
+    h2 {
+      font-size: clamp(28px, 4vw, 38px);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+    }
+
+    h3 {
+      font-size: 24px;
+      margin-top: 20px;
+    }
+
+    .lead {
+      max-width: 700px;
+      margin-top: 24px;
+      font-size: 18px;
+      color: #cbd5e1;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .button-link,
+    button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 18px;
+      padding: 14px 24px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .button-primary {
+      background: #3b82f6;
+      color: white;
+      box-shadow: 0 16px 40px rgba(59, 130, 246, 0.25);
+    }
+
+    .button-primary:hover {
+      background: #60a5fa;
+      transform: translateY(-1px);
+    }
+
+    .button-secondary {
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.04);
+      color: #e2e8f0;
+    }
+
+    .button-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .card {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 28px;
+      background: rgba(15, 23, 42, 0.92);
+      box-shadow: 0 28px 80px rgba(15, 23, 42, 0.45);
+    }
+
+    .preview-card {
+      padding: 24px;
+    }
+
+    .message-box {
+      border-radius: 20px;
+      background: #1e293b;
+      padding: 20px;
+      color: #e2e8f0;
+      font-size: 15px;
+    }
+
+    .message-box span {
+      color: #93c5fd;
+      font-weight: 700;
+    }
+
+    .message-box.success span {
+      color: #6ee7b7;
+    }
+
+    .send-circle {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 16px auto;
+      border-radius: 999px;
+      background: rgba(59, 130, 246, 0.15);
+      color: #93c5fd;
+      font-size: 22px;
+    }
+
+    section {
+      padding: 72px 24px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .stat-card {
+      padding: 26px;
+    }
+
+    .stat-number {
+      font-size: 42px;
+      font-weight: 900;
+      color: #93c5fd;
+    }
+
+    .stat-label {
+      margin-top: 10px;
+      color: #cbd5e1;
+    }
+
+    .words-box {
+      margin-top: 28px;
+      padding: 28px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .tag {
+      padding: 9px 16px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #dbeafe;
+    }
+
+    .two-grid,
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 32px;
+    }
+
+    .info-card {
+      padding: 32px;
+    }
+
+    .icon {
+      width: 46px;
+      height: 46px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 16px;
+      background: rgba(59, 130, 246, 0.14);
+      color: #93c5fd;
+      font-size: 24px;
+    }
+
+    .info-card p {
+      margin-top: 16px;
+      color: #cbd5e1;
+    }
+
+    .translator-header {
+      max-width: 720px;
+      margin: 0 auto 32px;
       text-align: center;
-      color: #94a3b8;
-      margin-bottom: 30px;
+    }
+
+    .translator-header .icon {
+      margin: 0 auto 18px;
+    }
+
+    .translator-card {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 28px;
     }
 
     textarea {
       width: 100%;
-      height: 150px;
-
+      min-height: 178px;
+      resize: vertical;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 22px;
+      outline: none;
       background: #1e293b;
-      color: white;
-
-      border: none;
-      border-radius: 12px;
-
-      padding: 15px;
-      font-size: 16px;
-
-      resize: none;
-    }
-
-    button {
-      margin-top: 15px;
-
-      width: 100%;
-      padding: 15px;
-
-      border: none;
-      border-radius: 12px;
-
-      background: #3b82f6;
-      color: white;
-
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #2563eb;
-    }
-
-    #response {
-      margin-top: 20px;
-
-      background: #1e293b;
-
+      color: #f8fafc;
       padding: 20px;
-      border-radius: 12px;
-
-      min-height: 120px;
-
-      white-space: pre-wrap;
+      font-size: 16px;
+      line-height: 1.6;
     }
 
-  </style>
-</head>
+    textarea:focus {
+      border-color: #60a5fa;
+    }
 
-<body>
+    #sendButton {
+      width: 100%;
+      margin-top: 18px;
+      min-height: 56px;
+    }
 
-  <div class="container">
+    .result {
+      margin-top: 28px;
+      min-height: 180px;
+      white-space: pre-wrap;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 22px;
+      background: #1e293b;
+      padding: 24px;
+      color: #f8fafc;
+    }
 
-    <h1>Переводчик</h1>
+    .error {
+      display: none;
+      margin-top: 16px;
+      border: 1px solid rgba(251, 191, 36, 0.25);
+      border-radius: 18px;
+      background: rgba(251, 191, 36, 0.1);
+      padding: 14px 16px;
+      color: #fde68a;
+      font-size: 14px;
+    }
 
-    <p>
-      Напишите сообщение и получите его перевод на официальный язык
-    </p>
+    footer {
+      padding: 32px 24px 48px;
+      color: #94a3b8;
+      text-align: center;
+    }
 
-    <textarea
-      id="userInput"
-      placeholder="Введите сообщение..."
-    ></textarea>
-
-    <button onclick="sendMessage()">
-      Перевести
-    </button>
-
-    <div id="response">
-      Здесь появится ответ...
-    </div>
-
-  </div>
-
-  <script>
-
-    async function sendMessage() {
-
-      const input =
-        document.getElementById("userInput").value;
-
-      const responseBlock =
-        document.getElementById("response");
-
-      responseBlock.innerText = "Загрузка...";
-
-      try {
-
-        const response = await fetch(
-          "/api/chat",
-          {
-            method: "POST",
-
-            headers: {
-              "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-              message: input
-            })
-          }
-        );
-
-        const data = await response.json();
-        console.log(data);
-
-        responseBlock.innerText = 
-          data.reply || data.error || JSON.stringify(data);
-
-      } catch (error) {
-
-        responseBlock.innerText =
-          "Ошибка подключения";
-
+    @media (max-width: 900px) {
+      .hero-grid,
+      .two-grid,
+      .project-grid {
+        grid-template-columns: 1fr;
       }
 
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
-  </script>
+    @media (max-width: 560px) {
+      .hero,
+      section {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
 
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .translator-card,
+      .info-card,
+      .stat-card,
+      .preview-card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="badge">✨ Жаргонизмы в культуре и сленге России</div>
+        <h1>Онлайн-переводчик русского сленга на понятный язык</h1>
+        <p class="lead">
+          Проект помогает понять жаргонизмы из игр, соцсетей, молодёжной речи и повседневного общения.
+          Сервис переводит фразу на официальный русский язык и объясняет каждое сленговое слово отдельно.
+        </p>
+        <div class="actions">
+          <a class="button-link button-primary" href="#translator">Попробовать переводчик</a>
+          <a class="button-link button-secondary" href="#project">О проекте</a>
+        </div>
+      </div>
+
+      <div class="card preview-card">
+        <div class="message-box">
+          <span>Пример запроса:</span>
+          <p>Короч, вчера в катке забустил тиммейтов, запушил мид, задоджил ульты...</p>
+        </div>
+        <div class="send-circle">➜</div>
+        <div class="message-box success">
+          <span>Официальный перевод:</span>
+          <p>Вчера в игре я помог команде, контролировал середину карты, избежал сильных способностей, но союзник всё равно потерял ресурсы.</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="stats">
+    <div class="container">
+      <div class="section-title">
+        <div class="icon">📊</div>
+        <h2>Статистика исследования</h2>
+      </div>
+
+      <div class="stats-grid">
+        <div class="card stat-card">
+          <div class="stat-number">50</div>
+          <p class="stat-label">респондентов в опросе</p>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-number">80%</div>
+          <p class="stat-label">используют жаргон с друзьями</p>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-number">70%</div>
+          <p class="stat-label">считают жаргонизмы выразительными</p>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-number">90%</div>
+          <p class="stat-label">не используют их со взрослыми и преподавателями</p>
+        </div>
+      </div>
+
+      <div class="card words-box">
+        <p>Самые узнаваемые слова по опросу:</p>
+        <div class="tags">
+          <span class="tag">#круто</span>
+          <span class="tag">#чиллить</span>
+          <span class="tag">#инфы</span>
+          <span class="tag">#короче</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2>Две стороны медали русского языка</h2>
+      <div class="two-grid">
+        <div class="card info-card">
+          <div class="icon">⚠️</div>
+          <h3>Жаргон как языковой шум</h3>
+          <p>
+            Когда жаргонизмы попадают в неподходящую ситуацию, они могут засорять речь,
+            снижать точность мысли и мешать общению между людьми разных возрастов и социальных групп.
+          </p>
+        </div>
+        <div class="card info-card">
+          <div class="icon">💬</div>
+          <h3>Жаргон как эмоция</h3>
+          <p>
+            При этом сленг делает речь живой: помогает быстрее выразить отношение,
+            настроение, иронию, принадлежность к группе или культурному контексту.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="project">
+    <div class="container project-grid">
+      <div class="card info-card">
+        <div class="icon">👥</div>
+        <h2>Контакт между разными слоями групп</h2>
+        <p>
+          Сленг часто понятен внутри одной группы: подростков, геймеров, студентов, интернет-сообществ.
+          Но для другой группы те же слова могут быть непонятными. Переводчик становится мостом между
+          поколениями, профессиями и культурными средами.
+        </p>
+      </div>
+
+      <div class="card info-card">
+        <div class="icon">🤝</div>
+        <h2>Суть проекта</h2>
+        <p>
+          Создать одностраничный сайт, где пользователь вводит жаргонную фразу,
+          а ИИ-агент переводит её на официальный русский язык, объясняет отдельные слова
+          и показывает, к какому типу сленга относится выражение.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="translator">
+    <div class="container">
+      <div class="translator-header">
+        <div class="icon">🌐</div>
+        <h2>Переводчик жаргонизмов</h2>
+        <p class="lead">Введите фразу со сленгом и получите понятный официальный перевод.</p>
+      </div>
+
+      <div class="card translator-card">
+        <textarea id="inputText" placeholder="Введите жаргонную фразу...">Короч, вчера в катке забустил тиммейтов: взял саппорта, запушил мид, задоджил все ульты, а этот краш все равно слил лут. Полнейший кринж!</textarea>
+        <button id="sendButton" class="button-primary">Отправить</button>
+        <div id="errorBox" class="error"></div>
+        <div id="resultBox" class="result">Официальный перевод:
+Вчера в игре я сильно разочаровался в своих товарищах по команде: выбрал роль поддержки, успешно контролировал середину карты, избежал всех ультимейтов, но этот игрок всё равно потерял ценные ресурсы. Это было крайне неприятно и разочаровывающе.
+
+Слова по отдельности:
+- Короч — короче, в общем
+- В катке — в игре, в матче
+- Забустил — помог усилить, поднять результат
+- Тиммейтов — товарищи по команде
+- Саппорт — роль поддержки
+- Запушил мид — продвинулся по центральной линии
+- Задоджил — избежал
+- Ульты — сильные способности
+- Слил лут — потерял ресурсы
+- Кринж — неприятно, стыдно, неловко
+
+{Геймерский сленг}</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Проект: «Жаргонизмы в культуре и сленге России» · Одностраничный сайт с подключением ИИ-агента
+  </footer>
+
+  <script>
+    const API_URL = "https://ai-site-xosa.vercel.app/api/chat";
+    const inputText = document.getElementById("inputText");
+    const sendButton = document.getElementById("sendButton");
+    const resultBox = document.getElementById("resultBox");
+    const errorBox = document.getElementById("errorBox");
+
+    function fallbackAnswer(text) {
+      return `Официальный перевод:\n${text || "Введите жаргонное выражение"}\n\nСлова по отдельности:\n- Жаргонные слова будут разобраны здесь\n- Значения будут объяснены простым литературным языком\n\n{Русский сленг}`;
+    }
+
+    async function translateSlang() {
+      const text = inputText.value.trim();
+
+      if (!text) {
+        errorBox.style.display = "block";
+        errorBox.textContent = "Введите текст для перевода.";
+        return;
+      }
+
+      sendButton.disabled = true;
+      sendButton.textContent = "Перевожу...";
+      errorBox.style.display = "none";
+      resultBox.textContent = "ИИ-агент обрабатывает запрос...";
+
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            message: `Переведи русский жаргонный текст на официальный литературный русский язык. Затем отдельно объясни жаргонные слова и в конце укажи тип сленга в фигурных скобках. Текст: ${text}`
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error("API временно недоступен");
+        }
+
+        const data = await response.json();
+        const answer = data.reply || data.message || data.answer || data.content || fallbackAnswer(text);
+        resultBox.textContent = answer;
+      } catch (error) {
+        errorBox.style.display = "block";
+        errorBox.textContent = "Не удалось получить ответ от ИИ-агента. Показан демонстрационный перевод.";
+        resultBox.textContent = fallbackAnswer(text);
+      } finally {
+        sendButton.disabled = false;
+        sendButton.textContent = "Отправить";
+      }
+    }
+
+    sendButton.addEventListener("click", translateSlang);
+  </script>
 </body>
 </html>
