@@ -1,134 +1,99 @@
 export default async function handler(req, res) {
 
-res.setHeader("Access-Control-Allow-Origin", "*");
-res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    res.setHeader(
+    "Access-Control-Allow-Origin",
+    "*"
+  );
 
-if (req.method === "OPTIONS") {
-return res.status(200).end();
-}
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "POST, OPTIONS"
+  );
 
-if (req.method !== "POST") {
-return res.status(405).json({ error: "Method not allowed" });
-}
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Content-Type"
+  );
 
-try {
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
 
-const { message, context } = req.body;
+  
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
 
-const response = await fetch(
-  "https://openrouter.ai/api/v1/chat/completions",
+  try {
+    const { message } = req.body;
+
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: "deepseek/deepseek-chat",
+       messages: [
   {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`
-    },
-    body: JSON.stringify({
-      model: "anthropic/claude-sonnet-4",
-      messages: [
-        {
-          role: "system",
-          content: `
+    role: "system",
 
-Ты профессиональный переводчик русского сленга, интернет-жаргона, молодёжного сленга, игрового сленга и разговорных выражений на литературный русский язык.
+    content: `
 
-Главная задача:
-точно перевести исходный текст на литературный русский язык с учётом указанного контекста.
+Ты переводчик русского сленга на литературный русский язык.
 
 Правила:
+- переводи текст на официальный русский язык
+- не отвечай на вопросы
+- не добавляй лишний текст
+- не придумывай значения
+- никогда не используй markdown
+- не используй **
+- не используй жирный текст
 
-* не отвечай на вопросы пользователя
-* не продолжай диалог
-* не давай советы
-* не комментируй текст
-* не добавляй информацию от себя
-* не придумывай значения слов
-* используй только значения, которые реально существуют в русском языке и сленге
-* если контекст указан, считай его приоритетным источником для выбора значения слова
-* если контекст не указан, выбирай наиболее распространённое значение
-* если значение невозможно определить даже с учётом контекста, укажи все наиболее вероятные варианты
-* сохраняй исходный смысл текста
-* не используй markdown
-* не используй жирный текст
-* не используй символы **
-
-Определение типа запроса:
-
-Если пользователь ввёл одно слово или короткую фразу (до 5 слов), используй формат для слов и фраз.
-
-Если пользователь ввёл предложение или несколько предложений, используй формат для текста.
-
-Формат для текста:
+Формат ответа для предложений:
 
 Перевод:
-<литературный перевод>
+<общий перевод текста>
 
 Разбор слов:
+- <слово> → <перевод> (<краткое объяснение>)
+- <слово> → <перевод> (<краткое объяснение>)
 
-* <сленговое слово> → <значение> (<краткое объяснение>)
-* <сленговое слово> → <значение> (<краткое объяснение>)
+{<основной тип сленга>}
 
-Тип сленга:
-<основной тип>
+Формат ответа для отдельных слов или фраз:
 
-Формат для слов и фраз:
-
-Основной перевод:
-<основное значение>
+<основной перевод>
 
 Дополнительные варианты:
+- <вариант>
+- <вариант>
 
-* <вариант>
-* <вариант>
+{<тип сленга>}
 
-Тип сленга:
-<тип>
+Дополнительно:
+- если указан контекст в скобках — учитывай его
+- если переводов несколько — выводи все подходящие
+- отвечай кратко
 
-Возможные типы сленга:
-
-* Молодёжный
-* Интернет-сленг
-* Игровой
-* Социальные сети
-* Криминальный
-* Профессиональный
-* Музыкальный
-* Спортивный
-* Разговорный
-* Смешанный
-
-Контекст может менять значение слова. Всегда учитывай контекст перед переводом.
-
-`            },
-            {
-              role: "user",
-              content:`
-Контекст:
-${context || "не указан"}
-
-Текст для перевода:
-${message}
 `
-}
+  },
+
+  {
+    role: "user",
+    content: message
+  }
 ]
-})
-}
-);
+      })
+    });
 
-const data = await response.json();
+    const data = await response.json();
 
-console.log("OpenRouter response:", JSON.stringify(data, null, 2));
-
-if (!response.ok) {
-  return res.status(response.status).json({
-    error: data
-  });
-}
-
-if (!data.choices?.[0]?.message?.content) {
-  return res.status(500).json({
-    error: data
+if (data.error) {
+  return res.status(200).json({
+    reply: data.error.message
   });
 }
 
@@ -136,6 +101,9 @@ return res.status(200).json({
   reply: data.choices[0].message.content
 });
 
-}
-
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message
+    });
+  }
 }
