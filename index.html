@@ -512,6 +512,11 @@
 <div id="resultBox" class="result">
 Введите текст и нажмите «Перевести».
 </div>
+    </div>
+  </div>
+  </section>
+  
+  <footer>
     Проект: «Жаргонизмы в культуре и сленге России»
   </footer>
 
@@ -523,11 +528,16 @@
     const resultBox = document.getElementById("resultBox");
     const errorBox = document.getElementById("errorBox");
 
-    function fallbackAnswer(text) {
-      return `Официальный перевод:\n${text || "Введите жаргонное выражение"}\n\nСлова по отдельности:\n- Жаргонные слова будут разобраны здесь\n- Значения будут объяснены простым литературным языком\n\n{Русский сленг}`;
-    }
+   <script>
+const API_URL = "https://ai-site-xosa.vercel.app/api/chat";
 
-    async function translateSlang() {
+const inputText = document.getElementById("inputText");
+const contextText = document.getElementById("contextText");
+const sendButton = document.getElementById("sendButton");
+const resultBox = document.getElementById("resultBox");
+const errorBox = document.getElementById("errorBox");
+
+async function translateSlang() {
 
   const text = inputText.value.trim();
   const context = contextText.value.trim();
@@ -564,16 +574,12 @@
 
     resultBox.textContent =
       data.reply ||
-      data.message ||
-      data.answer ||
-      data.content ||
       "Ответ не получен.";
 
   } catch (error) {
 
     errorBox.style.display = "block";
-    errorBox.textContent =
-      "Не удалось получить ответ от ИИ.";
+    errorBox.textContent = "Не удалось получить ответ от ИИ.";
 
   } finally {
 
@@ -581,43 +587,10 @@
     sendButton.textContent = "Перевести";
 
   }
-
 }
 
-      sendButton.disabled = true;
-      sendButton.textContent = "Перевожу...";
-      errorBox.style.display = "none";
-      resultBox.textContent = "ИИ-агент обрабатывает запрос...";
-
-      try {
-        const response = await fetch(API_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            message: text
-            })
-        });
-
-        if (!response.ok) {
-          throw new Error("API временно недоступен");
-        }
-
-        const data = await response.json();
-        const answer = data.reply || data.message || data.answer || data.content || fallbackAnswer(text);
-        resultBox.textContent = answer;
-      } catch (error) {
-        errorBox.style.display = "block";
-        errorBox.textContent = "Не удалось получить ответ от ИИ-агента. Показан демонстрационный перевод.";
-        resultBox.textContent = fallbackAnswer(text);
-      } finally {
-        sendButton.disabled = false;
-        sendButton.textContent = "Отправить";
-      }
-    }
-
-    sendButton.addEventListener("click", translateSlang);
-  </script>
+sendButton.addEventListener("click", translateSlang);
+</script>
+  
 </body>
 </html>
