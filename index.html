@@ -517,6 +517,7 @@
     const sendButton = document.getElementById("sendButton");
     const resultBox = document.getElementById("resultBox");
     const errorBox = document.getElementById("errorBox");
+    const contextText = document.getElementById("contextText");
 
     function fallbackAnswer(text) {
       return `Официальный перевод:\n${text || "Введите жаргонное выражение"}\n\nСлова по отдельности:\n- Жаргонные слова будут разобраны здесь\n- Значения будут объяснены простым литературным языком\n\n{Русский сленг}`;
