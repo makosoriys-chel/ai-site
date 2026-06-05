@@ -478,36 +478,40 @@
 
     <div class="card translator-card">
 
-      <h3 style="margin-bottom:10px;">Контекст (необязательно)</h3>
+     <h3 style="margin-bottom:10px;">Текст для перевода</h3>
 
-      <textarea
-        id="contextText"
-        placeholder="Например: разговор про отношения, переписка в Telegram, игра Dota 2, общение студентов и т.д."
-        style="min-height:120px;margin-bottom:20px;"
-      ></textarea>
+<textarea
+  id="inputText"
+  placeholder="Введите жаргонную фразу..."
+></textarea>
 
-      <h3 style="margin-bottom:10px;">Текст для перевода</h3>
+<h3
+  style="
+    font-size:12px;
+    font-weight:400;
+    color:#94a3b8;
+    margin-top:12px;
+    margin-bottom:6px;
+  "
+>
+  Контекст (необязательно)
+</h3>
 
-      <textarea
-        id="inputText"
-        placeholder="Введите жаргонную фразу..."
-      ></textarea>
+<textarea
+  id="contextText"
+  placeholder="Например: разговор про отношения, переписка в Telegram, игра Dota 2 и т.д."
+  style="min-height:80px;margin-bottom:20px;"
+></textarea>
 
-      <button id="sendButton" class="button-primary">
-        Перевести
-      </button>
+<button id="sendButton" class="button-primary">
+  Перевести
+</button>
 
-      <div id="errorBox" class="error"></div>
+<div id="errorBox" class="error"></div>
 
-      <div id="resultBox" class="result">
+<div id="resultBox" class="result">
 Введите текст и нажмите «Перевести».
-      </div>
-
-    </div>
-  </div>
-</section>
-
-  <footer>
+</div>
     Проект: «Жаргонизмы в культуре и сленге России»
   </footer>
 
