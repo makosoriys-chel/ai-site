@@ -118,21 +118,22 @@ ${message}
 
 const data = await response.json();
 
-if (data.error) {
-  return res.status(200).json({
-    reply: data.error.message
+console.log("OpenRouter response:", JSON.stringify(data, null, 2));
+
+if (!response.ok) {
+  return res.status(response.status).json({
+    error: data
+  });
+}
+
+if (!data.choices?.[0]?.message?.content) {
+  return res.status(500).json({
+    error: data
   });
 }
 
 return res.status(200).json({
   reply: data.choices[0].message.content
-});
-```
-
-} catch (error) {
-
-return res.status(500).json({
-  error: error.message
 });
 
 }
