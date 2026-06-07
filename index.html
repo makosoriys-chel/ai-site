@@ -782,7 +782,7 @@
 
       try {
         const answer = await translateWithAI(text);
-        result.innerHTML = `<div class="ai-answer">${escapeHtml(answer).replaceAll("\\n", "<br>")}</div>`;
+        result.innerHTML = `<div class="ai-answer">${escapeHtml(answer)}</div>`;
       } catch (error) {
         console.warn(error);
         result.innerHTML = localTranslate(text);
